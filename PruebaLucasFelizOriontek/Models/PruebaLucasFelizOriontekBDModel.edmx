@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PruebaLucasFelizOriontekBDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="nvarchar" MaxLength="50" />
+          <Property Name="Apellidos" Type="nvarchar" MaxLength="50" />
+          <Property Name="Telefono" Type="nchar" MaxLength="10" />
+          <Property Name="Correo" Type="nvarchar" MaxLength="300" />
+          <Property Name="FechaDeNacimiento" Type="date" />
+          <Property Name="Inactivo" Type="bit" />
+        </EntityType>
+        <EntityType Name="Direcciones">
+          <Key>
+            <PropertyRef Name="IdDireccion" />
+          </Key>
+          <Property Name="IdDireccion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="250" />
+          <Property Name="Inactivo" Type="bit" />
+        </EntityType>
+        <EntityType Name="DireccionesClientes">
+          <Key>
+            <PropertyRef Name="IdDireccionCliente" />
+          </Key>
+          <Property Name="IdDireccionCliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdDireccion" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DireccionesClientes_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="DireccionesClientes" Type="Self.DireccionesClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="DireccionesClientes">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DireccionesClientes_Direcciones">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="1" />
+          <End Role="DireccionesClientes" Type="Self.DireccionesClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="IdDireccion" />
+            </Principal>
+            <Dependent Role="DireccionesClientes">
+              <PropertyRef Name="IdDireccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaLucasFelizOriontekBDModelStoreContainer">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DireccionesClientes" EntityType="Self.DireccionesClientes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_DireccionesClientes_Clientes" Association="Self.FK_DireccionesClientes_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="DireccionesClientes" EntitySet="DireccionesClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DireccionesClientes_Direcciones" Association="Self.FK_DireccionesClientes_Direcciones">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="DireccionesClientes" EntitySet="DireccionesClientes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PruebaLucasFelizOriontekBDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clientes">
+          <Key>
+            <PropertyRef Name="IdCliente" />
+          </Key>
+          <Property Name="IdCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Correo" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="FechaDeNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Inactivo" Type="Boolean" />
+          <NavigationProperty Name="DireccionesClientes" Relationship="Self.FK_DireccionesClientes_Clientes" FromRole="Clientes" ToRole="DireccionesClientes" />
+        </EntityType>
+        <EntityType Name="Direcciones">
+          <Key>
+            <PropertyRef Name="IdDireccion" />
+          </Key>
+          <Property Name="IdDireccion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Direccion" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Inactivo" Type="Boolean" />
+          <NavigationProperty Name="DireccionesClientes" Relationship="Self.FK_DireccionesClientes_Direcciones" FromRole="Direcciones" ToRole="DireccionesClientes" />
+        </EntityType>
+        <EntityType Name="DireccionesClientes">
+          <Key>
+            <PropertyRef Name="IdDireccionCliente" />
+          </Key>
+          <Property Name="IdDireccionCliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdDireccion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Clientes" Relationship="Self.FK_DireccionesClientes_Clientes" FromRole="DireccionesClientes" ToRole="Clientes" />
+          <NavigationProperty Name="Direcciones" Relationship="Self.FK_DireccionesClientes_Direcciones" FromRole="DireccionesClientes" ToRole="Direcciones" />
+        </EntityType>
+        <Association Name="FK_DireccionesClientes_Clientes">
+          <End Role="Clientes" Type="Self.Clientes" Multiplicity="1" />
+          <End Role="DireccionesClientes" Type="Self.DireccionesClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clientes">
+              <PropertyRef Name="IdCliente" />
+            </Principal>
+            <Dependent Role="DireccionesClientes">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DireccionesClientes_Direcciones">
+          <End Role="Direcciones" Type="Self.Direcciones" Multiplicity="1" />
+          <End Role="DireccionesClientes" Type="Self.DireccionesClientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Direcciones">
+              <PropertyRef Name="IdDireccion" />
+            </Principal>
+            <Dependent Role="DireccionesClientes">
+              <PropertyRef Name="IdDireccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PruebaLucasFelizOriontekBDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clientes" EntityType="Self.Clientes" />
+          <EntitySet Name="Direcciones" EntityType="Self.Direcciones" />
+          <EntitySet Name="DireccionesClientes" EntityType="Self.DireccionesClientes" />
+          <AssociationSet Name="FK_DireccionesClientes_Clientes" Association="Self.FK_DireccionesClientes_Clientes">
+            <End Role="Clientes" EntitySet="Clientes" />
+            <End Role="DireccionesClientes" EntitySet="DireccionesClientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DireccionesClientes_Direcciones" Association="Self.FK_DireccionesClientes_Direcciones">
+            <End Role="Direcciones" EntitySet="Direcciones" />
+            <End Role="DireccionesClientes" EntitySet="DireccionesClientes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PruebaLucasFelizOriontekBDModelStoreContainer" CdmEntityContainer="PruebaLucasFelizOriontekBDEntities">
+          <EntitySetMapping Name="Clientes">
+            <EntityTypeMapping TypeName="PruebaLucasFelizOriontekBDModel.Clientes">
+              <MappingFragment StoreEntitySet="Clientes">
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Correo" ColumnName="Correo" />
+                <ScalarProperty Name="FechaDeNacimiento" ColumnName="FechaDeNacimiento" />
+                <ScalarProperty Name="Inactivo" ColumnName="Inactivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direcciones">
+            <EntityTypeMapping TypeName="PruebaLucasFelizOriontekBDModel.Direcciones">
+              <MappingFragment StoreEntitySet="Direcciones">
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Inactivo" ColumnName="Inactivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DireccionesClientes">
+            <EntityTypeMapping TypeName="PruebaLucasFelizOriontekBDModel.DireccionesClientes">
+              <MappingFragment StoreEntitySet="DireccionesClientes">
+                <ScalarProperty Name="IdDireccionCliente" ColumnName="IdDireccionCliente" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdDireccion" ColumnName="IdDireccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
